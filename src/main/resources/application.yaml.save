@@ -1,4 +1,4 @@
-server:
+ice/postgres-postgresql 5432:5432   :server:
   port: 8080
 spring:
   jpa:
@@ -8,17 +8,17 @@ spring:
     url: jdbc:postgresql://${SECRET_DB_HOST:localhost}:${SECRET_DB_PORT:5432}/backend
     username: ${SECRET_DB_USERNAME:postgres}
     password: ${SECRET_DB_PASSWORD:syspass}
-  kafka:
-    bootstrap-servers: ${SECRET_KAFKA_HOST:localhost}:${SECRET_KAFKA_PORT:9092}
-  data:
-    redis:
-      host: ${SECRET_REDIS_HOST:localhost}
-      port: ${SECRET_REDIS_PORT:6379}
-      password: ${SECRET_REDIS_PASSWORD:redispass}
+  redis:
+    host: ${SECRET_REDIS_HOST:localhost}
+    port: ${SECRET_REDIS_PORT:6379}
   cache:
     type: redis
     redis:
       time-to-live: 300000
+  kafka:
+    bootstrap-servers: ${SECRET_KAFKA_HOST:localhost}:${SECRET_KAFKA_PORT:9092}
+
+
 app:
   token:
     secret: ${SECRET_JWT_SECRET:'m#mySecret@2023'}

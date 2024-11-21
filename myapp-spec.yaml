@@ -1,0 +1,122 @@
+apiVersion: apps/v1 #deployment
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    customer: myapp
+    environment: development
+    app: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 1
+  strategy:
+    type: RollingUpdate #ให้แอพทำงานได้ก่อนค่อยแทนที่
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - image: localhost:5000/myapp:latest
+          name: myapp
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 #<< container port
+          resources: # << resource by 1 pods
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+          livenessProbe: # << check health
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 300 # เข้าเช็คหลัง 5 นาที
+            periodSeconds: 10 # และเช็คทุกๆ สิบวินาที
+          env:
+            - name: SECRET_KAFKA_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: kafka_host
+            - name: SECRET_KAFKA_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: kafka_port
+            - name: SECRET_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: db_host
+            - name: SECRET_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: db_port
+            - name: SECRET_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: db_username
+            - name: SECRET_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp # อ้างอิงชื่อ secret
+                  key: db_password
+            - name: SECRET_REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: redis_host
+            - name: SECRET_REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: redis_port
+            - name: SECRET_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: redis_password
+            - name: SECRET_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: myapp
+                  key: jwt_secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    app: myapp
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+  selector:
+    app: myapp
+---
+apiVersion: autoscaling/v1  #auto scale
+kind: HorizontalPodAutoscaler
+metadata:
+  name: myapp
+  namespace: myapp
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: myapp
+  minReplicas: 1 #default
+  maxReplicas: 1 # max to scale
+  targetCPUUtilizationPercentage: 80 # if cpu > 80%
