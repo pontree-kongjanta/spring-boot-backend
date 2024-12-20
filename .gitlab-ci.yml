@@ -6,6 +6,7 @@ build_jar:
   image: openjdk:17-alpine
   stage: build
   script:
+    - apk add --no-cache maven
     - mvn clean package -DskipTests
   artifacts:
     paths:
