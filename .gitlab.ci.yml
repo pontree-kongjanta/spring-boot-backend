@@ -1,4 +1,7 @@
-build:
+stages:
+  - build
+
+build_image:
   image: dokcer
   stage: build
   services:
