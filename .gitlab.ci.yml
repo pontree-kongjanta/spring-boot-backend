@@ -1,0 +1,10 @@
+build:
+  image: dokcer
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/group11820151/k8s-data/myapp:latest .
+    - docker push $CI_REGISTRY/group11820151/k8s-data/myapp:latest
+    - echo "build image"
