@@ -22,7 +22,7 @@ class TestUser {
     void testSave() {
 
         RegisterRequest request = new RegisterRequest();
-        request.setUsername(testData.name);
+        request.setEmail(testData.name);
         request.setPassword(testData.passWord);
         User user = userService.createUser(testData.name,testData.passWord);
 
@@ -34,14 +34,14 @@ class TestUser {
     @Order(2)
     public void testFindByName(){
         RegisterRequest request = new RegisterRequest();
-        request.setUsername(testData.name);
+        request.setEmail(testData.name);
         User user = userService.findByUserName(request);
         log.info("xxxx user:"+user);
         Assertions.assertNotNull(user);
     }
 
     interface testData{
-        String name="gg";
+        String name="toon@gmail.com";
         String passWord = "1234gg";
     }
 }

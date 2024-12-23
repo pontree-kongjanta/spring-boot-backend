@@ -7,7 +7,6 @@ import com.example.training.myApp4.request.LoginRequest;
 import com.example.training.myApp4.request.RegisterRequest;
 import com.example.training.myApp4.request.UpdateUserRequest;
 import com.example.training.myApp4.response.RegisterResponse;
-import com.example.training.myApp4.response.UpdateUserResponse;
 import com.example.training.myApp4.response.UserLoginResponse;
 import com.example.training.myApp4.service.TokenService;
 import com.example.training.myApp4.service.UserService;
@@ -18,21 +17,29 @@ public class UserBusiness {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final  MessageBroker messageBroker;
 
-    public UserBusiness(UserService userService, TokenService tokenService){
+    public UserBusiness(UserService userService, TokenService tokenService, MessageBroker messageBroker){
         this.userService = userService;
         this.tokenService = tokenService;
+
+        this.messageBroker = messageBroker;
     }
 
     public RegisterResponse register(RegisterRequest request) throws BaseException {
 
-        if(request.getUsername() == null){
+        if(request.getEmail() == null){
             throw UserException.requestIsNull();
         }
-        User user = userService.createUser(request.getUsername(),request.getPassword());
+        User user = userService.createUser(request.getEmail(),request.getPassword());
         RegisterResponse response = new RegisterResponse();
         response.setMessage("insert success");
-        response.setUserName(user.getUsername());
+        response.setEmail(user.getEmail());
+
+        if(user.getEmail() == null){
+            throw  UserException.insertFailed();
+        }
+        messageBroker.sendKafka(request);
         return response;
     }
 

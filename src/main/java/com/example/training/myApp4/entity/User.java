@@ -13,7 +13,7 @@ import java.util.List;
 public class User extends BaseEntity implements Serializable {
 
     @Column( length = 120, nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @Column(length = 120, nullable = false)
     private String password;

@@ -1,6 +1,7 @@
 package com.example.training.myApp4.config.kafka;
 
-import com.example.training.common2.request.EmailRequest;
+
+import com.example.training.myApp4.request.RegisterRequest;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -20,18 +22,24 @@ public class KafkaProducerConfig {
     private String server;
 
     @Bean
+    public KafkaTemplate<String, String> kafkaEmailTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
+
+    @Bean
+    public ProducerFactory<String, String> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfig());
+    }
+
+    @Bean
     public Map<String, Object> producerConfig(){
         Map<String,Object> map = new HashMap<>();
         map.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,server);
         map.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        map.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        map.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return map;
     }
 
-    @Bean
-    public KafkaTemplate<String,EmailRequest> kafkaEmailTemplate(){
-        DefaultKafkaProducerFactory<String, EmailRequest> factory =
-                new DefaultKafkaProducerFactory<>(producerConfig());
-        return new KafkaTemplate<>(factory);
-    }
+
+
 }

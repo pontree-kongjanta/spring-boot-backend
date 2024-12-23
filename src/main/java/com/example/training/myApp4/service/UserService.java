@@ -26,23 +26,23 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Cacheable(value = "user", key = "#username", unless = "#result == null")
-    public User  createUser(String username, String password){
+    @Cacheable(value = "email", key = "#email", unless = "#result == null")
+    public User  createUser(String email, String password){
         User user = new User();
-        user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(password);
         return userRepository.save(user);
     }
 
     public User login(LoginRequest request) throws BaseException {
-        Optional<User> byUserName = userRepository.findByUsername(request.getEmail());
+        Optional<User> byEmail = userRepository.findByEmail(request.getEmail());
 
-        if(byUserName.isEmpty()){
+        if(byEmail.isEmpty()){
             throw UserException.passwordInvalid();
         }
 
-        User user = byUserName.get();
-        if(user.getUsername().isEmpty()){
+        User user = byEmail.get();
+        if(user.getEmail().isEmpty()){
             throw UserException.passwordInvalid();
         }
         return user;
@@ -50,7 +50,7 @@ public class UserService {
 
 
     public User findByUserName(RegisterRequest request){
-        Optional<User> opt = userRepository.findByUsername(request.getUsername());
+        Optional<User> opt = userRepository.findByEmail(request.getEmail());
         if(opt.isPresent()){
             return opt.get();
         }else{
@@ -58,10 +58,10 @@ public class UserService {
         }
     }
 
-    @CachePut(value = "user", key = "#username")
-    public User updateUser(String username, String password) throws BaseException{
+    @CachePut(value = "email", key = "#email")
+    public User updateUser(String email, String password) throws BaseException{
 
-        Optional<User> opt = userRepository.findByUsername(username);
+        Optional<User> opt = userRepository.findByEmail(email);
         if(opt.isEmpty()){
             throw UserException.emailIsnull();
         }

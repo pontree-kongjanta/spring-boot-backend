@@ -16,4 +16,8 @@ public class UserException extends BaseException{
     public static UserException emailIsnull(){
         return new UserException("updateUser.email.null");
     }
+
+    public static UserException insertFailed(){
+        return new UserException("register.insert.failed");
+    }
 }

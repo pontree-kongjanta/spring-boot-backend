@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RegisterResponse {
-    private String userName;
+    private String email;
     private String message;
 }
