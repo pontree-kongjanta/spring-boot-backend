@@ -1,6 +1,7 @@
 stages:
   - build
   - docker
+  - deploy
 
 build_jar:
   image: openjdk:17-alpine
@@ -23,3 +24,15 @@ build_image:
     - docker build -t $CI_REGISTRY/group11820151/k8s-data/myapp:latest .
     - docker push $CI_REGISTRY/group11820151/k8s-data/myapp:latest
     - echo "build image"
+
+deploy_k8s:
+  stage: deploy
+  variables:
+    KUBE_CONTEXT: group11820151/k8s-connection:k8s-connection
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl get pods
+   
