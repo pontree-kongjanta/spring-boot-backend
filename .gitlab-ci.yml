@@ -38,6 +38,7 @@ deploy_k8s:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   script:
+    - kubectl config view
     - echo "KUBE_CONTEXT:$KUBE_CONTEXT"
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT
