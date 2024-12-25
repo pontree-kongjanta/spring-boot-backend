@@ -1,3 +1,6 @@
+variables:
+  KUBE_CONTEXT: group11820151/k8s-connection:k8s-connection
+
 stages:
   - build
   - docker
@@ -27,8 +30,6 @@ build_image:
 
 deploy_k8s:
   stage: deploy
-  variables:
-    KUBE_CONTEXT: group11820151/k8s-connection:k8s-connection
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
