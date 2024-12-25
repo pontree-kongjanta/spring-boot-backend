@@ -12,12 +12,14 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.yaml
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +33,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+##file
+auth-gitlab-registry.json
+myapp-secret-gitlab.yaml
