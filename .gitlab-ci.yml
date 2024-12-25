@@ -2,8 +2,6 @@ variables:
   KUBE_CONTEXT: group11820151/k8s-connection:k8s-connection
 
 stages:
-  - build
-  - docker
   - deploy
 
 build_jar:
@@ -34,6 +32,7 @@ deploy_k8s:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   script:
+    - echo "KUBE_CONTEXT:$KUBE_CONTEXT"
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT
     - kubectl get pods
