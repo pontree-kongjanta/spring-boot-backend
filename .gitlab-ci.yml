@@ -2,6 +2,8 @@ variables:
   KUBE_CONTEXT: group11820151/k8s-connection:k8s-connection
 
 stages:
+  - build
+  - docker
   - deploy
 
 build_jar:
@@ -14,6 +16,8 @@ build_jar:
     paths:
       - target/app.jar
     expire_in: 1 hour
+  only:
+    - master  
 
 build_image:
   image: docker
@@ -25,6 +29,8 @@ build_image:
     - docker build -t $CI_REGISTRY/group11820151/k8s-data/myapp:latest .
     - docker push $CI_REGISTRY/group11820151/k8s-data/myapp:latest
     - echo "build image"
+  only:
+    - master    
 
 deploy_k8s:
   stage: deploy
