@@ -38,6 +38,6 @@ deploy_k8s:
     KUBE_CONTEXT: "group11820151/k8s-connection:k8s-connection"  
   script:
     - kubectl config get-contexts
-    - kubectl config use-context docker-desktop
+    - kubectl config use-context $KUBE_CONTEXT
     - kubectl get pods
    
