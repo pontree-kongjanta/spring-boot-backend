@@ -29,15 +29,13 @@ build_image:
   only:
     - master    
 
-deploy_k8s:
-  stage: deploy
+deploy_to_k8s:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
-  variables:
-    KUBE_CONTEXT: "group11820151/k8s-connection:k8s-connection"  
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT
-    - kubectl get pods
+    - kubectl config use-context group11820151/k8s-connection:k8s-connection
+    - kubectl get pods -n myapp
+
    
