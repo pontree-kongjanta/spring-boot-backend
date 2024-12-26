@@ -34,6 +34,8 @@ deploy_k8s:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
+  variables:
+    KUBE_CONTEXT: "group11820151/k8s-connection:k8s-connection"  
   script:
     - kubectl get pods
    
