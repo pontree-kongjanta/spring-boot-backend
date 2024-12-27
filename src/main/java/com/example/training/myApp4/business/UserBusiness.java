@@ -32,13 +32,16 @@ public class UserBusiness {
             throw UserException.requestIsNull();
         }
         User user = userService.createUser(request.getEmail(),request.getPassword());
-        RegisterResponse response = new RegisterResponse();
-        response.setMessage("insert success");
-        response.setEmail(user.getEmail());
 
         if(user.getEmail() == null){
             throw  UserException.insertFailed();
         }
+        
+        RegisterResponse response = new RegisterResponse();
+        response.setMessage("insert success");
+        response.setEmail(user.getEmail());
+
+
         //messageBroker.sendKafka(request);
         return response;
     }
