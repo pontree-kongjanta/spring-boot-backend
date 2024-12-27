@@ -33,6 +33,8 @@ deploy_to_k8s:
   script:
     - kubectl config get-contexts
     - kubectl config use-context group11820151/k8s-connection:k8s-connection
+    - kubectl set image deployment/myapp myapp=$CI_REGISTRY/group11820151/k8s-data/myapp:latest -n myapp
+    - kubectl rollout status deployment/myapp -n myapp
     - kubectl get pods -n myapp
 
    
