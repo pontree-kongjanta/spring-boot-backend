@@ -36,9 +36,9 @@ public class UserBusiness {
         if(user.getEmail() == null){
             throw  UserException.insertFailed();
         }
-        
+
         RegisterResponse response = new RegisterResponse();
-        response.setMessage("insert success");
+        response.setMessage("insert successx");
         response.setEmail(user.getEmail());
 
 
