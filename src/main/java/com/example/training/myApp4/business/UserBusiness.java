@@ -38,7 +38,7 @@ public class UserBusiness {
         }
 
         RegisterResponse response = new RegisterResponse();
-        response.setMessage("insert successx");
+        response.setMessage("insert successx2");
         response.setEmail(user.getEmail());
 
 
