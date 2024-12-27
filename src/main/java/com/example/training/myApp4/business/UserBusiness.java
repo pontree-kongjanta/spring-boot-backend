@@ -39,7 +39,7 @@ public class UserBusiness {
         if(user.getEmail() == null){
             throw  UserException.insertFailed();
         }
-        messageBroker.sendKafka(request);
+        //messageBroker.sendKafka(request);
         return response;
     }
 
