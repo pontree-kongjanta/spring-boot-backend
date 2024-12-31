@@ -35,5 +35,4 @@ build/
 .vscode/
 
 ##file
-auth-gitlab-registry.json
-myapp-secret-gitlab.yaml
+src/.DS_Store

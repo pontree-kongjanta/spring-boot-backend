@@ -23,7 +23,7 @@ spec:
         app: myapp
     spec:
       containers:
-        - image: registry.gitlab.com/group11820151/k8s-data/myapp:latest
+        - image: registry.gitlab.com/devops4690701/k8s-myapp/myapp:latest
           name: myapp
           imagePullPolicy: Always
           ports:
@@ -93,7 +93,7 @@ spec:
                   name: myapp-env
                   key: jwt_secret
       imagePullSecrets:
-        - name: myapp-secret-gitlab
+        - name: gitlab-registry-auth
 ---
 apiVersion: v1
 kind: Service
