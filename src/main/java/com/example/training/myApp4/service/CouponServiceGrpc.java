@@ -3,6 +3,7 @@ package com.example.training.myApp4.service;
 import com.example.training.myApp4.response.CouponDiscountResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import net.devh.boot.grpc.example.GrpcCouponServiceGrpc;
 import net.devh.boot.grpc.example.GrpcCouponServiceRequest;
 import net.devh.boot.grpc.example.GrpcCouponServiceResponse;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class CouponServiceGrpc {
                 .usePlaintext()
                 .build();
 
-        net.devh.boot.grpc.example.GrpcCouponServiceGrpc.GrpcCouponServiceBlockingStub blockingStub = net.devh.boot.grpc.example.GrpcCouponServiceGrpc.newBlockingStub(channel);
+        GrpcCouponServiceGrpc.GrpcCouponServiceBlockingStub blockingStub = GrpcCouponServiceGrpc.newBlockingStub(channel);
 
         GrpcCouponServiceRequest request = GrpcCouponServiceRequest.newBuilder()
                 .setCouponCode(couponCode)
