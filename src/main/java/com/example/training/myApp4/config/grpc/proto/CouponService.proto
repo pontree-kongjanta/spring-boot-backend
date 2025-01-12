@@ -1,0 +1,19 @@
+syntax = "proto3";
+package net.devh.boot.grpc.example;
+option java_multiple_files = true;
+
+
+service GrpcCouponService {
+  rpc CouponDiscount (GrpcCouponServiceRequest) returns (GrpcCouponServiceResponse) {}
+}
+
+message GrpcCouponServiceRequest {
+  string couponCode = 1;
+  double originalPrice = 2;
+}
+
+message GrpcCouponServiceResponse {
+  string couponCode = 1;
+  double totalPrice = 2;
+  string status = 3;
+}

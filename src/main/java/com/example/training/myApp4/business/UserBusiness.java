@@ -38,11 +38,11 @@ public class UserBusiness {
         }
 
         RegisterResponse response = new RegisterResponse();
-        response.setMessage("insert successx4");
+        response.setMessage("insert success");
         response.setEmail(user.getEmail());
 
 
-        //messageBroker.sendKafka(request);
+        messageBroker.sendKafka(request);
         return response;
     }
 

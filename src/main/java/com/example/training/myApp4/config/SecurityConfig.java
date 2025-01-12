@@ -28,6 +28,7 @@ public class SecurityConfig {
             ,"/myApp/updateUser"
             ,"/socket/**"
             //,"/chat/message"
+            ,"/coupon-service/coupon-discount"
     };
 
     @Bean
