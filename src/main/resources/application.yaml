@@ -24,4 +24,11 @@ app:
     secret: ${SECRET_JWT_SECRET:'m#mySecret@2023'}
     issuer: MyAppService
 
+grpc:
+  client:
+    couponServiceGrpc:
+      address: "static://localhost:9090"
+      negotiationType: "plaintext"
+
+
 
